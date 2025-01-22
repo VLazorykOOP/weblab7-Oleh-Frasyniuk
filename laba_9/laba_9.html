@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Моя медіа-бібліотека</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+        }
+        form {
+            background-color: #fff;
+            border: 1px solid #ccc;
+            padding: 20px;
+            border-radius: 8px;
+            max-width: 500px;
+            margin: auto;
+        }
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        select, button {
+            width: 100%;
+            margin-bottom: 20px;
+            padding: 10px;
+            font-size: 1rem;
+        }
+        button {
+            background-color: #007BFF;
+            color: #fff;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+        .media-player {
+            margin-top: 30px;
+        }
+        video, audio {
+            max-width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Моя медіа-бібліотека</h1>
+    
+    <form method="GET" action="#" class="library-form">
+        <label for="media-type">Оберіть тип медіа:</label>
+        <select id="media-type" name="media-type">
+            <option value="audio">Аудіо</option>
+            <option value="video">Відео</option>
+        </select>
+
+        <label for="media-file">Оберіть медіафайл:</label>
+        <select id="media-file" name="media-file">
+            <option value="audio-file">Музика 1</option>
+            <option value="video-file">Відео 1</option>
+        </select>
+
+        <button type="submit">Відтворити</button>
+    </form>
+
+    <div class="media-player">
+        <!-- Placeholder for media player -->
+        <div id="audio-player" style="display:none;">
+            <h3>Аудіо файл</h3>
+            <audio controls>
+                <source src="music1.mp3" type="audio/mp3">
+                Ваш браузер не підтримує тег audio.
+            </audio>
+        </div>
+
+        <div id="video-player" style="display:none;">
+            <h3>Відео файл</h3>
+            <video controls>
+                <source src="video1.mp4" type="video/mp4">
+                Ваш браузер не підтримує тег video.
+            </video>
+        </div>
+    </div>
+
+    <script>
+        const mediaTypeSelect = document.getElementById('media-type');
+        const mediaFileSelect = document.getElementById('media-file');
+        const audioPlayer = document.getElementById('audio-player');
+        const videoPlayer = document.getElementById('video-player');
+        
+        const form = document.querySelector('.library-form');
+        
+        form.addEventListener('submit', (event) => {
+            event.preventDefault();
+            
+            const mediaType = mediaTypeSelect.value;
+            const mediaFile = mediaFileSelect.value;
+            
+            // Hide all media players by default
+            audioPlayer.style.display = 'none';
+            videoPlayer.style.display = 'none';
+
+            // Show the selected media player
+            if (mediaType === 'audio') {
+                audioPlayer.style.display = 'block';
+            } else if (mediaType === 'video') {
+                videoPlayer.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>
