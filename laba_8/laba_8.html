@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canvas Dynamic Shapes</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+        }
+    </style>
+</head>
+<body>
+    <h1>Canvas Illustration with Animations</h1>
+    <canvas id="myCanvas" width="600" height="400"></canvas>
+
+    <script>
+        // Отримання контексту канвасу
+        const canvas = document.getElementById("myCanvas");
+        const ctx = canvas.getContext("2d");
+
+        // Статичні фігури
+        function drawStaticShapes() {
+            // Малюємо круг
+            ctx.beginPath();
+            ctx.arc(100, 100, 50, 0, Math.PI * 2);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+
+            // Малюємо еліпс
+            ctx.beginPath();
+            ctx.ellipse(300, 200, 70, 40, 0, 0, Math.PI * 2);
+            ctx.fillStyle = "blue";
+            ctx.fill();
+        }
+
+        // Малюємо текст по кривій
+        function drawTextAlongCurve() {
+            ctx.beginPath();
+            ctx.moveTo(100, 300);
+            ctx.quadraticCurveTo(300, 50, 500, 300);
+            ctx.strokeStyle = "blue";
+            ctx.stroke();
+
+            ctx.font = "16px Arial";
+            ctx.fillStyle = "red";
+            ctx.fillText("This is text along a curve", 150, 200);
+        }
+
+        // Анімовані фігури
+        let circleX = 150;
+        let circleY = 150;
+        let circleRadius = 40;
+        let circleColor = "blue";
+
+        let rectX = 250;
+        let rectY = 100;
+        let rectWidth = 50;
+        let rectHeight = 50;
+        let rectDX = 2; // Швидкість руху прямокутника
+
+        let polygonAngle = 0;
+        let polygonCenterX = 450;
+        let polygonCenterY = 150;
+
+        let rectWidthAnim = 50;
+        let rectWidthIncrease = true;
+
+        let skewX = 0;
+        let skewDirection = 1;
+
+        function animateShapes() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height); // Очищаємо канвас
+
+            // Статичні фігури
+            drawStaticShapes();
+            drawTextAlongCurve();
+
+            // Анімований круг
+            ctx.beginPath();
+            ctx.arc(circleX, circleY, circleRadius, 0, Math.PI * 2);
+            ctx.fillStyle = circleColor;
+            ctx.fill();
+            circleColor = (circleColor === "blue") ? "red" : "blue"; // Зміна кольору
+
+            // Анімований прямокутник (переміщення)
+            ctx.beginPath();
+            ctx.rect(rectX, rectY, rectWidth, rectHeight);
+            ctx.fillStyle = "green";
+            ctx.fill();
+            rectX += rectDX;
+            if (rectX + rectWidth > canvas.width || rectX < 0) {
+                rectDX = -rectDX; // Зміна напрямку при досягненні країв
+            }
+
+            // Анімований полігон (обертання)
+            ctx.save();
+            ctx.translate(polygonCenterX, polygonCenterY);
+            ctx.rotate(polygonAngle * Math.PI / 180);
+            ctx.beginPath();
+            ctx.moveTo(0, -50);
+            ctx.lineTo(50, 0);
+            ctx.lineTo(0, 50);
+            ctx.lineTo(-50, 0);
+            ctx.closePath();
+            ctx.fillStyle = "orange";
+            ctx.fill();
+            ctx.restore();
+            polygonAngle += 1; // Збільшення кута обертання
+
+            // Анімований прямокутник з зміною ширини
+            ctx.beginPath();
+            ctx.rect(100, 300, rectWidthAnim, 50);
+            ctx.fillStyle = "purple";
+            ctx.fill();
+            if (rectWidthIncrease) {
+                rectWidthAnim += 2;
+            } else {
+                rectWidthAnim -= 2;
+            }
+            if (rectWidthAnim >= 150 || rectWidthAnim <= 50) {
+                rectWidthIncrease = !rectWidthIncrease;
+            }
+
+            // Анімований еліпс з перекосом
+            ctx.save();
+            ctx.transform(1, Math.tan(skewX * Math.PI / 180), 0, 1, 0, 0);
+            ctx.beginPath();
+            ctx.ellipse(500, 250, 60, 30, 0, 0, Math.PI * 2);
+            ctx.fillStyle = "yellow";
+            ctx.fill();
+            ctx.restore();
+            skewX += 1 * skewDirection;
+            if (skewX >= 20 || skewX <= 0) {
+                skewDirection = -skewDirection; // Зміна напрямку перекосу
+            }
+
+            // Викликаємо анімацію повторно
+            requestAnimationFrame(animateShapes);
+        }
+
+        // Початок анімації
+        animateShapes();
+    </script>
+</body>
+</html>
