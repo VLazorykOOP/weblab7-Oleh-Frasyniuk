@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Обробка подій та Завдання з масивом</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f8ff;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #4682b4;
+            color: white;
+            padding: 10px 20px;
+            text-align: center;
+        }
+        .container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        button {
+            background-color: #4682b4;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #5a9bd4;
+        }
+        textarea {
+            width: 100%;
+            height: 100px;
+            margin-top: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-family: monospace;
+        }
+        input[type="text"] {
+            width: calc(100% - 22px);
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        .image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+        .image-container img {
+            width: 150px;
+            height: auto;
+            border: 2px solid #4682b4;
+            border-radius: 10px;
+            transition: transform 0.3s ease;
+        }
+        .image-container img:hover {
+            transform: scale(1.1);
+        }
+    </style>
+</head>
+<body onload="alert('Сторінка повністю завантажена!')" onunload="console.log('Сторінка закривається')">
+    <header>
+        <h1>Обробка подій та Завдання з масивом</h1>
+    </header>
+    <div class="container">
+        <h2>Інтерактивна форма</h2>
+        <form action="#" method="get">
+            <label for="search-input">Введіть текст для пошуку:</label>
+            <input type="text" id="search-input" placeholder="Введіть щось...">
+            <button type="button" onclick="searchText()">Шукати інформацію</button>
+            <textarea id="search-result" readonly></textarea>
+        </form>
+
+        <h2>Завдання з масивом</h2>
+        <button onclick="runArrayTask()">Завдання з масивом</button>
+        <textarea id="array-output" readonly></textarea>
+
+        <h2>Обробка подій зображень</h2>
+        <div class="image-container">
+            <img src="image1.jpg" alt="Зразок зображення 1" onmouseover="alert('Навели курсор на зображення 1!')">
+            <img src="image2.jpg" alt="Зразок зображення 2" onmouseover="alert('Навели курсор на зображення 2!')">
+        </div>
+    </div>
+    <script>
+        function searchText() {
+            const input = document.getElementById('search-input').value;
+            const result = input.match(/\bг.*?і\b/gi);
+            document.getElementById('search-result').value = result ? result.join(', ') : 'Збігів не знайдено';
+        }
+
+        function runArrayTask() {
+            const array = [3, -1, 4, 5, -6, 7, 8, -2];
+            let minPositive = Infinity;
+            let index = -1;
+
+            for (let i = 0; i < array.length; i++) {
+                if (array[i] > 0 && array[i] < minPositive) {
+                    minPositive = array[i];
+                    index = i;
+                }
+            }
+
+            const output = `Мінімальний додатний елемент: ${minPositive}, Індекс: ${index}`;
+            document.getElementById('array-output').value = output;
+        }
+    </script>
+</body>
+</html>
